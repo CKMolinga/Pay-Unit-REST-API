@@ -8,10 +8,10 @@ export class HeadersService {
   setHeaders() {
     return {
       headers: {
-        Authorization: `Basic ${Buffer.from(
-          `${this.configService.get('API_AUTH')}`,
-        ).toString('base64')}`,
         'Content-Type': 'application/json',
+        Authorization: `Basic ${Buffer.from(
+          `${this.configService.get('Authorization')}`,
+        ).toString('base64')}`,
         'x-api-key': `${this.configService.get('API_KEY')}`,
         mode: this.configService.get('MODE'),
       },

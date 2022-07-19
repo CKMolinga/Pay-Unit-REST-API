@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { TransactionEntity } from './transaction/entities/transaction.entity';
 import { TransactionModule } from './transaction/transaction.module';
 import { HeadersService } from './headers/headers.service';
+import { TransactionController } from './transaction/transaction.controller';
+import { TransactionService } from './transaction/transaction.service';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { HeadersService } from './headers/headers.service';
       synchronize: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService, HeadersService],
+  controllers: [AppController,TransactionController],
+  providers: [AppService, HeadersService,TransactionService],
 })
 export class AppModule {}

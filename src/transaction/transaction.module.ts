@@ -8,7 +8,7 @@ import { HeadersService } from '../headers/headers.service';
 @Module({
   controllers: [TransactionController],
   providers: [TransactionService, HeadersService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule,TransactionService,HeadersService],
   imports: [TypeOrmModule.forFeature([TransactionEntity])],
 })
 export class TransactionModule {}

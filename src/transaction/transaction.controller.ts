@@ -8,7 +8,7 @@ export class TransactionController {
 
   @Post('initiate')
   initiatePayment(@Body() body: CreateTransactionDto) {
-    // return this.transactionService.initiatePayment(body);
+    return this.transactionService.initiatePayment(body);
   }
 
   @Get('getpsp/:transaction_id')

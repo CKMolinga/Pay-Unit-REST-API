@@ -13,7 +13,7 @@ export class TransactionController {
 
   @Get('getpsp/:transaction_id')
   getPsp(@Param('transaction_id') transaction_id: string) {
-    // return this.transactionService.getPsp(transaction_id);
+    return this.transactionService.getPsp(transaction_id);
   }
  
 }

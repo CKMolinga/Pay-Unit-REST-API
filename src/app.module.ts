@@ -8,6 +8,7 @@ import { TransactionModule } from './transaction/transaction.module';
 import { HeadersService } from './headers/headers.service';
 import { TransactionController } from './transaction/transaction.controller';
 import { TransactionService } from './transaction/transaction.service';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TransactionService } from './transaction/transaction.service';
       entities: [TransactionEntity],
       synchronize: true,
     }),
+    PaymentModule,
   ],
   controllers: [AppController,TransactionController],
   providers: [AppService, HeadersService,TransactionService],

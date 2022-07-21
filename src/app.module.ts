@@ -9,6 +9,7 @@ import { HeadersService } from './headers/headers.service';
 import { TransactionController } from './transaction/transaction.controller';
 import { TransactionService } from './transaction/transaction.service';
 import { PaymentModule } from './payment/payment.module';
+import { PaymentEntity } from './payment/entities/payment.entity';
 
 @Module({
   imports: [
@@ -21,12 +22,12 @@ import { PaymentModule } from './payment/payment.module';
       username: 'admin',
       password: 'New2022pass',
       database: 'payment',
-      entities: [TransactionEntity],
+      entities: [TransactionEntity, PaymentEntity],
       synchronize: true,
     }),
     PaymentModule,
   ],
-  controllers: [AppController,TransactionController],
-  providers: [AppService, HeadersService,TransactionService],
+  controllers: [AppController,TransactionController, TransactionController],
+  providers: [AppService, HeadersService,TransactionService, TransactionService],
 })
 export class AppModule {}

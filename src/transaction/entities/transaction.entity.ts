@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum Currencies {
@@ -11,6 +12,8 @@ export class TransactionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+
+  @ApiProperty({ example: 1, description: 'The age of the Cat' })
   @Column({type:"numeric"})
   total_amount: number;
 

@@ -6,6 +6,7 @@ import { HeadersService } from '../headers/headers.service';
 import { TransactionEntity } from '../transaction/entities/transaction.entity';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { PaymentEntity } from './entities/payment.entity';
+import { FetchStatusService } from '../fetch-status/fetch-status.service'
 
 @Injectable()
 export class PaymentService {
@@ -15,6 +16,7 @@ export class PaymentService {
     @InjectRepository(PaymentEntity)
     private paymentRepository: Repository<PaymentEntity>,
     private config: HeadersService,
+    private fetch_status_service: FetchStatusService,
   ) {}
 
   //* Make payment for a transaction
@@ -87,6 +89,7 @@ export class PaymentService {
         this.config.setHeaders(),
       );
 
+      const payment_status = "pending"
       const { pay_token, payment_ref, auth_token, x_token, paytoken } =
         data?.data;
 
@@ -98,6 +101,7 @@ export class PaymentService {
         paytoken,
         transaction_id,
         gateway,
+        payment_status
       });
       await this.paymentRepository.save(payment);
 
@@ -124,31 +128,50 @@ export class PaymentService {
       );
     }
 
-    const { pay_token, payment_ref, gateway, auth_token, x_token, paytoken } =
-      payment;
+    let message: string
 
-    //? if PSP is MTN MOMO, get payment status
-    if (gateway === 'mtnmomo') {
-      try {
-        const { data } = await axios.get(
-          `${this.config.baseUrl()}/gateway/paymentstatus/${gateway}/${transaction_id}?pay_token="${pay_token}"&payment_ref="${payment_ref}"`,
-          this.config.setHeaders(),
-        );
-
-        return data;
-      } catch (error) {
-        return error?.response?.data;
-      }
+    if(payment.payment_status === 'pending') {
+      message = "Your transaction is processing, please wait ..."
+    }
+    else if (payment.payment_status === "success") {
+      message = "Payment succesful"
+    }
+    else {
+      message = "Payment failed"
     }
 
-    //? else if PSP is ORANGE, get payment status
-    else if (gateway === 'orange') {
-      try {
-        const {data} = await axios.get(`${this.config.baseUrl()}/gateway/paymentstatus/${gateway}/${transaction_id}?paytoken="${paytoken}"&auth-token="${auth_token}"&x-token="${x_token}"`,this.config.setHeaders())  
-    return data
-      } catch (error) {
-        return error?.response?.data;
-      }
+    return {
+      statusCode: payment.payment_status === 'failed' ? 400 : 200,
+      status: payment.payment_status,
+      message,
+      data: { transaction_id: payment.transaction_id},
     }
+
+    // const { pay_token, payment_ref, gateway, auth_token, x_token, paytoken } =
+    //   payment;
+
+    // //? if PSP is MTN MOMO, get payment status
+    // if (gateway === 'mtnmomo') {
+    //   try {
+    //     const { data } = await axios.get(
+    //       `${this.config.baseUrl()}/gateway/paymentstatus/${gateway}/${transaction_id}?pay_token="${pay_token}"&payment_ref="${payment_ref}"`,
+    //       this.config.setHeaders(),
+    //     );
+
+    //     return data;
+    //   } catch (error) {
+    //     return error?.response?.data;
+    //   }
+    // }
+
+    // //? else if PSP is ORANGE, get payment status
+    // else if (gateway === 'orange') {
+    //   try {
+    //     const {data} = await axios.get(`${this.config.baseUrl()}/gateway/paymentstatus/${gateway}/${transaction_id}?paytoken="${paytoken}"&auth-token="${auth_token}"&x-token="${x_token}"`,this.config.setHeaders())  
+    // return data
+    //   } catch (error) {
+    //     return error?.response?.data;
+    //   }
+    // }
   }
 }

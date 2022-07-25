@@ -6,10 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionEntity } from '../transaction/entities/transaction.entity';
 import { TransactionModule } from '../transaction/transaction.module';
 import { PaymentEntity } from './entities/payment.entity';
+import { FetchStatusService } from '../fetch-status/fetch-status.service'
 
 @Module({
   controllers: [PaymentController],
-  providers: [PaymentService, HeadersService],
+  providers: [PaymentService, HeadersService, FetchStatusService],
   imports: [TransactionModule, TypeOrmModule.forFeature([PaymentEntity, TransactionEntity])],
   exports: [TypeOrmModule],
 })

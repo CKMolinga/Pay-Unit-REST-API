@@ -25,4 +25,7 @@ export class PaymentEntity {
 
   @Column({ type: 'longtext', nullable: true })
   x_token: string;
+
+  @Column({type:"text",nullable:true})
+  payment_status: "failed" | "success" | "pending"
 }

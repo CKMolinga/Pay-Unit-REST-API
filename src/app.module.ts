@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TransactionEntity } from './transaction/entities/transaction.entity';
@@ -10,11 +11,13 @@ import { TransactionController } from './transaction/transaction.controller';
 import { TransactionService } from './transaction/transaction.service';
 import { PaymentModule } from './payment/payment.module';
 import { PaymentEntity } from './payment/entities/payment.entity';
+import { FetchStatusService } from './fetch-status/fetch-status.service';
 
 @Module({
   imports: [
     TransactionModule,
-    ConfigModule.forRoot({ isGlobal: true, }),
+    ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -27,7 +30,13 @@ import { PaymentEntity } from './payment/entities/payment.entity';
     }),
     PaymentModule,
   ],
-  controllers: [AppController,TransactionController, TransactionController],
-  providers: [AppService, HeadersService,TransactionService, TransactionService],
+  controllers: [AppController, TransactionController, TransactionController],
+  providers: [
+    AppService,
+    HeadersService,
+    TransactionService,
+    TransactionService,
+    FetchStatusService,
+  ],
 })
 export class AppModule {}

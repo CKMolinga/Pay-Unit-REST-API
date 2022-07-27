@@ -23,15 +23,16 @@ import { FetchStatusService } from './fetch-status/fetch-status.service';
       host: 'ec2-44-208-88-195.compute-1.amazonaws.com',
       port: 5432,
       username: 'equvibzaihmlpg',
-      password: 'eef6cef4fca03561af92c7a5eef74aada5e163468089d56b594dd2c1388e2f94',
+      password:
+        'eef6cef4fca03561af92c7a5eef74aada5e163468089d56b594dd2c1388e2f94',
       database: 'dbq8vin8c9uq9b',
       entities: [TransactionEntity, PaymentEntity],
       synchronize: true,
-      ssl:{
+      url: 'postgres://equvibzaihmlpg:eef6cef4fca03561af92c7a5eef74aada5e163468089d56b594dd2c1388e2f94@ec2-44-208-88-195.compute-1.amazonaws.com:5432/dbq8vin8c9uq9b',
+      ssl: {
         require: true,
-        rejectUnauthorized: false 
-      }
-  
+        rejectUnauthorized: false,
+      },
     }),
     PaymentModule,
   ],

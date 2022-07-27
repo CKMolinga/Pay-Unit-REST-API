@@ -19,14 +19,19 @@ import { FetchStatusService } from './fetch-status/fetch-status.service';
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'admin',
-      password: 'New2022pass',
-      database: 'payment',
+      type: 'postgres',
+      host: 'ec2-44-208-88-195.compute-1.amazonaws.com',
+      port: 5432,
+      username: 'equvibzaihmlpg',
+      password: 'eef6cef4fca03561af92c7a5eef74aada5e163468089d56b594dd2c1388e2f94',
+      database: 'dbq8vin8c9uq9b',
       entities: [TransactionEntity, PaymentEntity],
       synchronize: true,
+      ssl:{
+        require: true,
+        rejectUnauthorized: false 
+      }
+  
     }),
     PaymentModule,
   ],

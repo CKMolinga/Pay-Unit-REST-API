@@ -21,4 +21,8 @@ export class HeadersService {
   baseUrl() {
     return this.configService.get('BASE_URL');
   }
+
+  localUrl() {
+    return this.configService.get('LOCAL_URL');
+  }
 }

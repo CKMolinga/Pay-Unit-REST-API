@@ -13,6 +13,8 @@ import { PaymentModule } from './payment/payment.module';
 import { PaymentEntity } from './payment/entities/payment.entity';
 import { FetchStatusService } from './fetch-status/fetch-status.service';
 import { AuthModule } from './auth/auth.module';
+import { AuthController } from './auth/auth.controller';
+import { Auth } from './auth/entities/auth.entity';
 
 @Module({
   imports: [
@@ -40,13 +42,18 @@ import { AuthModule } from './auth/auth.module';
       username: 'admin',
       password: 'New2022pass',
       database: 'payment',
-      entities: [TransactionEntity, PaymentEntity],
+      entities: [TransactionEntity, PaymentEntity, Auth],
       synchronize: true,
     }),
     PaymentModule,
     AuthModule,
   ],
-  controllers: [AppController, TransactionController, TransactionController],
+  controllers: [
+    AppController,
+    TransactionController,
+    TransactionController,
+    AuthController,
+  ],
   providers: [
     AppService,
     HeadersService,

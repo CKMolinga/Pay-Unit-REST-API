@@ -12,6 +12,7 @@ import { TransactionService } from './transaction/transaction.service';
 import { PaymentModule } from './payment/payment.module';
 import { PaymentEntity } from './payment/entities/payment.entity';
 import { FetchStatusService } from './fetch-status/fetch-status.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { FetchStatusService } from './fetch-status/fetch-status.service';
       synchronize: true,
     }),
     PaymentModule,
+    AuthModule,
   ],
   controllers: [AppController, TransactionController, TransactionController],
   providers: [
